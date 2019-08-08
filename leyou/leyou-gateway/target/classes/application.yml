@@ -13,10 +13,16 @@ zuul:
   routes:
     leyou-item-service: /item/**
     leyou-search: /search/**
+    leyou-user-service: /user/**
+    leyou-auth-service: /auth/** # 授权中心微服务
+    leyou-cart: /cart/**
+    leyou-order: /order/**
     leyou-upload:
       path: /upload/**
       serviceId: leyou-upload
       strip-prefix: false
+  add-host-header: true #携带请求本身的head头信息
+  sensitive-headers: #匹配禁止使用的头信息，这里设置为null，否则set-cookie无效
 hystrix:
   command:
     default:
@@ -29,3 +35,15 @@ ribbon:
   ReadTimeout: 3500
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 0
+leyou:
+  jwt:
+    pubKeyPath: D:\\app\\GitHub\\WebMarket\\rsa\\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN # cookie的名称
+  filter:
+    allowPaths:
+      - /api/auth
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item

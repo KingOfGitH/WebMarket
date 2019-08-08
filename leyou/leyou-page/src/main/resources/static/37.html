@@ -1,0 +1,964 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<title>乐优商城--商品详情页</title>
+	<link rel="icon" href="/assets/img/favicon.ico">
+
+	<link rel="stylesheet" type="text/css" href="/css/webbase.css" />
+	<link rel="stylesheet" type="text/css" href="/css/pages-item.css" />
+	<link rel="stylesheet" type="text/css" href="/css/pages-zoom.css" />
+	<link rel="stylesheet" type="text/css" href="/css/widget-cartPanelView.css" />
+
+	<style type="text/css">
+		.goods-intro-list li {
+			display: inline-block;
+			width: 300px;
+		}
+		.Ptable {
+			margin: 10px 0;
+		}
+		.Ptable-item {
+			padding: 12px 0;
+			line-height: 220%;
+			color: #999;
+			font-size: 12px;
+			border-bottom: 1px solid #eee;
+		}
+		.Ptable-item h3 {
+			width: 110px;
+			text-align: right;
+		}
+		.Ptable-item h3, .package-list h3 {
+			font-weight: 400;
+			font-size: 12px;
+			float: left;
+		}
+		h3 {
+			display: block;
+			font-size: 1.17em;
+			-webkit-margin-before: 1em;
+			-webkit-margin-after: 1em;
+			-webkit-margin-start: 0px;
+			-webkit-margin-end: 0px;
+			font-weight: bold;
+		}
+		.Ptable-item dl {
+			margin-left: 110px;
+		}
+		dl {
+			display: block;
+			-webkit-margin-before: 1em;
+			-webkit-margin-after: 1em;
+			-webkit-margin-start: 0px;
+			-webkit-margin-end: 0px;
+		}
+		.Ptable-item dt {
+			width: 160px;
+			float: left;
+			text-align: right;
+			padding-right: 5px;
+		}
+		.Ptable-item dd {
+			margin-left: 210px;
+		}
+		dd {
+			display: block;
+			-webkit-margin-start: 40px;
+		}
+		.package-list {
+			padding: 12px 0;
+			line-height: 220%;
+			color: #999;
+			font-size: 12px;
+			margin-top: -1px;
+		}
+		.package-list h3 {
+			width: 130px;
+			text-align: right;
+		}
+		.package-list p {
+			margin-left: 155px;
+			padding-right: 50px;
+		}
+	</style>
+
+</head>
+
+<body>
+
+<!-- 头部栏位 -->
+<!--页面顶部，由js动态加载-->
+<div id="itemApp">
+	<div id="nav-bottom">
+		<ly-top/>
+	</div>
+	<div class="py-container">
+		<div id="item">
+			<div class="crumb-wrap">
+				<ul class="sui-breadcrumb">
+					<li>
+						<a href="#">手机</a>
+					</li>
+					<li>
+						<a href="#">手机通讯</a>
+					</li>
+					<li>
+						<a href="#">手机</a>
+					</li>
+					<li>
+						<a href="#">华为（HUAWEI）</a>
+					</li>
+					<li class="active">荣耀9青春版 全网通 标配版 3GB+32GB </li>
+				</ul>
+			</div>
+			<!--product-info-->
+			<div class="product-info">
+				<div class="fl preview-wrap">
+					<!--放大镜效果-->
+					<div class="zoom">
+						<!--默认第一个预览-->
+						<div id="preview" class="spec-preview">
+							<span class="jqzoom">
+								<img :jqimg="images[0]" :src="images[0]" width="400px" height="400px"/>
+							</span>
+						</div>
+						<!--下方的缩略图-->
+						<div class="spec-scroll">
+							<a class="prev">&lt;</a>
+							<!--左右按钮-->
+							<div class="items">
+								<ul>
+									<li v-for="img in images">
+										<img :src="img" :bimg="img" onmousemove="preview(this)"/>
+									</li>
+								</ul>
+							</div>
+							<a class="next">&gt;</a>
+						</div>
+					</div>
+				</div>
+				<div class="fr itemInfo-wrap">
+					<div class="sku-name">
+						<h4 v-text="sku.title"></h4>
+					</div>
+					<div class="news"><span>限时赠耳机，赠完即止！全屏四摄，正反都美！<a href='http://sale.jd.com/act/L1Y2V6ERZePab4.html' target='_blank'>荣耀10 99元定金预售，点击进入》》》</a></span></div>
+					<div class="summary">
+						<div class="summary-wrap">
+							<div class="fl title"><i>价　　格</i></div>
+							<div class="fl price">
+								<i>¥</i><em v-text="ly.formatPrice(sku.price)"></em><span>降价通知</span>
+							</div>
+							<div class="fr remark"><i>累计评价</i><em>612188</em></div>
+						</div>
+						<div class="summary-wrap">
+							<div class="fl title">
+								<i>促　　销</i>
+							</div>
+							<div class="fl fix-width">
+								<i class="red-bg">加价购</i>
+								<em class="t-gray">满999.00另加20.00元，或满1999.00另加30.00元，或满2999.00另加40.00元，即可在购物车换
+									购热销商品</em>
+							</div>
+						</div>
+					</div>
+					<div class="support">
+						<div class="summary-wrap">
+							<div class="fl title">
+								<i>支　　持</i>
+							</div>
+							<div class="fl fix-width">
+								<em class="t-gray">以旧换新，闲置手机回收 4G套餐超值抢 礼品购</em>
+							</div>
+						</div>
+						<div class="summary-wrap">
+							<div class="fl title">
+								<i>配 送 至</i>
+							</div>
+							<div class="fl fix-width">
+								<em class="t-gray">上海 <span v-text="sku.stock > 0 ? '有货' : '缺货'"></span></em>
+							</div>
+						</div>
+					</div>
+					<div class="clearfix choose">
+						<div id="specification" class="summary-wrap clearfix">
+							<dl v-for="(options,id) in specialSpec" :key="id">
+								<dt>
+									<div class="fl title">
+										<i v-text="params[id]"></i>
+									</div>
+								</dt>
+								<dd v-for="(o,i) in options" :key="i" @click="selectSku(id,i)">
+									<a href="javascript:;" :class="{selected:i === indexes[id], locked:locked(id, i)}">
+										{{o}}<span title="点击取消选择">&nbsp;</span>
+									</a>
+								</dd>
+							</dl>
+						</div>
+
+						<div class="summary-wrap">
+							<div class="fl title">
+								<div class="control-group">
+									<div class="controls">
+										<input autocomplete="off" type="text" disabled v-model="num" minnum="1"
+											   class="itxt"/>
+										<a href="javascript:void(0)" class="increment plus" @click="increment">+</a>
+										<a href="javascript:void(0)" class="increment mins" @click="decrement">-</a>
+									</div>
+								</div>
+							</div>
+							<div class="fl">
+								<ul class="btn-choose unstyled">
+									<li>
+										<a href="#" @click.prevent="addCart" target="_blank"
+										   class="sui-btn  btn-danger addshopcar">加入购物车</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--product-detail-->
+			<div class="clearfix product-detail">
+				<div class="fl aside">
+					<ul class="sui-nav nav-tabs tab-wraped">
+						<li class="active">
+							<a href="#index" data-toggle="tab">
+								<span>相关分类</span>
+							</a>
+						</li>
+						<li>
+							<a href="#profile" data-toggle="tab">
+								<span>推荐品牌</span>
+							</a>
+						</li>
+					</ul>
+					<div class="tab-content tab-wraped">
+						<div id="index" class="tab-pane active">
+							<ul class="part-list unstyled">
+								<li>手机</li>
+								<li>手机壳</li>
+								<li>内存卡</li>
+								<li>Iphone配件</li>
+								<li>贴膜</li>
+								<li>手机耳机</li>
+								<li>移动电源</li>
+								<li>平板电脑</li>
+							</ul>
+							<ul class="goods-list unstyled">
+								<li>
+									<div class="list-wrap">
+										<div class="p-img">
+											<img src="/img/_/part01.png"/>
+										</div>
+										<div class="attr">
+											<em>Apple苹果iPhone 6s (A1699)</em>
+										</div>
+										<div class="price">
+											<strong>
+												<em>¥</em>
+												<i>6088.00</i>
+											</strong>
+										</div>
+										<div class="operate">
+											<a href="javascript:void(0);" class="sui-btn btn-bordered">加入购物车</a>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="list-wrap">
+										<div class="p-img">
+											<img src="/img/_/part02.png"/>
+										</div>
+										<div class="attr">
+											<em>Apple苹果iPhone 6s (A1699)</em>
+										</div>
+										<div class="price">
+											<strong>
+												<em>¥</em>
+												<i>6088.00</i>
+											</strong>
+										</div>
+										<div class="operate">
+											<a href="javascript:void(0);" class="sui-btn btn-bordered">加入购物车</a>
+										</div>
+									</div>
+								</li>
+								<li>
+									<div class="list-wrap">
+										<div class="p-img">
+											<img src="/img/_/part03.png"/>
+										</div>
+										<div class="attr">
+											<em>Apple苹果iPhone 6s (A1699)</em>
+										</div>
+										<div class="price">
+											<strong>
+												<em>¥</em>
+												<i>6088.00</i>
+											</strong>
+										</div>
+										<div class="operate">
+											<a href="javascript:void(0);" class="sui-btn btn-bordered">加入购物车</a>
+										</div>
+									</div>
+									<div class="list-wrap">
+										<div class="p-img">
+											<img src="/img/_/part02.png"/>
+										</div>
+										<div class="attr">
+											<em>Apple苹果iPhone 6s (A1699)</em>
+										</div>
+										<div class="price">
+											<strong>
+												<em>¥</em>
+												<i>6088.00</i>
+											</strong>
+										</div>
+										<div class="operate">
+											<a href="javascript:void(0);" class="sui-btn btn-bordered">加入购物车</a>
+										</div>
+									</div>
+									<div class="list-wrap">
+										<div class="p-img">
+											<img src="/img/_/part03.png"/>
+										</div>
+										<div class="attr">
+											<em>Apple苹果iPhone 6s (A1699)</em>
+										</div>
+										<div class="price">
+											<strong>
+												<em>¥</em>
+												<i>6088.00</i>
+											</strong>
+										</div>
+										<div class="operate">
+											<a href="javascript:void(0);" class="sui-btn btn-bordered">加入购物车</a>
+										</div>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div id="profile" class="tab-pane">
+							<p>推荐品牌</p>
+						</div>
+					</div>
+				</div>
+				<div class="fr detail">
+					<div class="clearfix fitting">
+						<h4 class="kt">选择搭配</h4>
+						<div class="good-suits">
+							<div class="fl master">
+								<div class="list-wrap">
+									<div class="p-img">
+										<img src="/img/_/l-m01.png"/>
+									</div>
+									<em>￥5299</em>
+									<i>+</i>
+								</div>
+							</div>
+							<div class="fl suits">
+								<ul class="suit-list">
+									<li class="">
+										<div id="e">
+											<img src="/img/_/dp01.png"/>
+										</div>
+										<i>Feless费勒斯VR</i>
+										<label data-toggle="checkbox" class="checkbox-pretty">
+											<input type="checkbox"><span>39</span>
+										</label>
+									</li>
+									<li class="">
+										<div id=""><img src="/img/_/dp02.png"/></div>
+										<i>Feless费勒斯VR</i>
+										<label data-toggle="checkbox" class="checkbox-pretty">
+											<input type="checkbox"><span>50</span>
+										</label>
+									</li>
+									<li class="">
+										<div id=""><img src="/img/_/dp03.png"/></div>
+										<i>Feless费勒斯VR</i>
+										<label data-toggle="checkbox" class="checkbox-pretty">
+											<input type="checkbox"><span>59</span>
+										</label>
+									</li>
+									<li class="">
+										<div id=""><img src="/img/_/dp04.png"/></div>
+										<i>Feless费勒斯VR</i>
+										<label data-toggle="checkbox" class="checkbox-pretty">
+											<input type="checkbox"><span>99</span>
+										</label>
+									</li>
+								</ul>
+							</div>
+							<div class="fr result">
+								<div class="num">已选购0件商品</div>
+								<div class="price-tit"><strong>套餐价</strong></div>
+								<div class="price">￥5299</div>
+								<button class="sui-btn  btn-danger addshopcar">加入购物车</button>
+							</div>
+						</div>
+					</div>
+					<div class="tab-main intro">
+						<ul class="sui-nav nav-tabs tab-wraped">
+							<li class="active">
+								<a href="#one" data-toggle="tab">
+									<span>商品介绍</span>
+								</a>
+							</li>
+							<li>
+								<a href="#two" data-toggle="tab">
+									<span>规格与包装</span>
+								</a>
+							</li>
+							<li>
+								<a href="#three" data-toggle="tab">
+									<span>售后保障</span>
+								</a>
+							</li>
+							<li>
+								<a href="#four" data-toggle="tab">
+									<span>商品评价</span>
+								</a>
+							</li>
+							<li>
+								<a href="#five" data-toggle="tab">
+									<span>手机社区</span>
+								</a>
+							</li>
+						</ul>
+						<div class="clearfix"></div>
+						<div class="tab-content tab-wraped">
+							<div id="one" class="tab-pane active">
+								<ul class="goods-intro-list unstyled" style="list-style: none;">
+									<li>分辨率：1920*1080(FHD)</li>
+									<li>后置摄像头：1200万像素</li>
+									<li>前置摄像头：500万像素</li>
+									<li>核 数：其他</li>
+									<li>频 率：以官网信息为准</li>
+									<li>品牌： Apple</li>
+									<li>商品名称：APPLEiPhone 6s Plus</li>
+									<li>商品编号：1861098</li>
+									<li>商品毛重：0.51kg</li>
+									<li>商品产地：中国大陆</li>
+									<li>热点：指纹识别，Apple Pay，金属机身，拍照神器</li>
+									<li>系统：苹果（IOS）</li>
+									<li>像素：1000-1600万</li>
+									<li>机身内存：64GB</li>
+								</ul>
+								<!--商品详情-->
+								<div class="intro-detail">
+									<div><div style="width:750px;margin:0 auto; position:relative"> 
+ <img src="//img10.360buyimg.com/cms/jfs/t12985/210/2337314546/237740/7b4a9de3/5a3a01dbN1fe3b7ba.jpg" /> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1206px;background-image:url(//img12.360buyimg.com/cms/jfs/t15553/162/694052178/264402/97d776d/5a3a03c7Nd4c186c4.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 109px; text-align: center; line-height: 40px; font-size: 24px; font-family: '微软雅黑'; color: #eee; height: 138px; width: 568px; top: 2079px;"> 
+  <p>作为双摄技术的先行者，我们为荣耀9青春版配备了全新的四摄方案，不仅带来了专业的后置双摄，更引入了全新的前置双摄，践行我们在摄影领域不断超越的承诺。 </p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1323px;background-image:url(//img11.360buyimg.com/cms/jfs/t15286/50/811480565/281991/74140f2e/5a3a0867N7db8e2ac.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 191px; text-align: right; line-height: 40px; font-size: 24px; font-family: '微软雅黑'; color: #eee; height: 138px; width: 541px; top: 3332px;"> 
+  <p>搭载专业的人像摄影模式，出色的人像作品，尽在弹指一挥间，配合硬件级虚化，无论何时何地，<br /> 你都是焦点。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1339px;background-image:url(//img13.360buyimg.com/cms/jfs/t13021/229/2339805857/291423/3e93a8ea/5a3a0a11N60d8d1b1.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 289px; text-align: right; line-height: 40px; font-size: 24px; font-family: '微软雅黑'; color: #eee; height: 261px; width: 440px; top: 4577px;"> 
+  <p>专业的背景虚化能力，为你的作品呈现单反级大光圈的卓越效果。同时采用多帧合成技术，夜景拍摄也出色，逆光拍照更清晰。除此之外还提供动态照片，先拍照后对焦，智能识物，美食模式等贴心功能，待你去体验。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1291px;background-image:url(//img30.360buyimg.com/cms/jfs/t14095/235/2289378468/288086/5f242475/5a3a0bb1N00844ba8.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 50px; text-align: left; line-height: 32px; font-size: 22px; font-family: '微软雅黑'; color: #000; height: 184px; width: 650px; top: 5282px;"> 
+  <p>采用了3D立体光融合算法，利用毫米级的精准检测，针对面部骨骼轮廓进行打点建模，让你的照片更精致更立体。并能聪明地识别拍摄对象的性别，根据男女的不同面部特征*6，给出精准的定制化的美颜效果。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1760px;background-image:url(//img30.360buyimg.com/cms/jfs/t15862/28/640455773/279775/c1f047d/5a3a15bbN2815ab08.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 38px; text-align: center; line-height: 36px; font-size: 26px; font-family: '微软雅黑'; color: #000; height: 184px; width: 691px; top: 6538px;"> 
+  <p>追求极致的超窄边框，2160*1080 FHD+全高清分辨率，色彩更为鲜明、视频更清晰。18:9全面屏，带来更加开阔的视野，以及身临其境的影视游戏体验。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1334px;background-image:url(//img13.360buyimg.com/cms/jfs/t13081/136/2323263635/254021/cf4c5a6a/5a3a18f9N3f3dae11.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 149px; text-align: right; line-height: 36px; font-size: 26px; font-family: '微软雅黑'; color: #EEE; height: 184px; width: 578px; top: 8358px;"> 
+  <p>双面2.5D玻璃，背部12层纳米级工艺，拥有更加炫丽的镜面效果*7，彰显年轻活力，中框采用PPVD及激光雕刻先进工艺两道亮边熠熠生辉， 犹如洛神顾盼流连的双眼，让你心驰神往。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1531px;background-image:url(//img14.360buyimg.com/cms/jfs/t14053/131/2228046946/280700/10686850/5a3a1b03N19b57cea.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 51px; text-align: center; line-height: 36px; font-size: 26px; font-family: '微软雅黑'; color: #039; height: 184px; width: 669px; top: 10639px;"> 
+  <p>得益于16nm芯片制程工艺，CPU工作主频高至2.36GH， 功耗依然可控。机身存储最高达64GB*9，从容面对不断增长的微信及QQ聊天记录。4GB高速内存*9，多应用同时运行无压力，游戏运行更流畅。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1574px;background-image:url(//img30.360buyimg.com/cms/jfs/t13513/111/2345462867/295554/e3f08939/5a3a1d0cN51c3d0b4.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 48px; text-align: left; line-height: 36px; font-size: 26px; font-family: '微软雅黑'; color: #039; height: 184px; width: 669px; top: 11215px;"> 
+  <p>新一代智慧化操作系统，提供了更智能的人机交互体验， 并对底层进行了手术刀式的深度优化，高效优化系统缓存及碎片整理，有效缓解了手机长时间使用卡顿问题。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1239px;background-image:url(//img14.360buyimg.com/cms/jfs/t15154/161/2073040612/246310/c12e0e16/5a699a54N4c6040a7.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 71px; text-align: center; line-height: 32px; font-size: 24px; font-family: '微软雅黑'; color: #EEE; height: 184px; width: 669px; top: 12771px;"> 
+  <p>三网通吃，支持移动，电信，联通2G/3G/4G网络，主副卡随意设定；支持VoLTE高清语音*11， </p> 
+  <p>体验更加真切声音。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1132px;background-image:url(//img20.360buyimg.com/cms/jfs/t14854/97/830265996/279554/e8da44bf/5a3a2598Nddf77c2a.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 176px; text-align: right; line-height: 32px; font-size: 24px; font-family: '微软雅黑'; color: #039; height: 184px; width: 550px; top: 14449px;"> 
+  <p>在网络信号较弱的区域，如偏远公路，山区， 林立的高楼内，手机可拥有更好的信号，通话更清晰。 在信号覆盖区域，即使时速超过300公里 依然能够稳定连接不易掉线*12。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1151px;background-image:url(//img11.360buyimg.com/cms/jfs/t13699/127/933164053/289871/c11c4bd9/5a3a2707N02ad9c11.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 179px; text-align: right; line-height: 32px; font-size: 24px; font-family: '微软雅黑'; color: #039; height: 184px; width: 550px; top: 15890px;"> 
+  <p>新一代多功能指纹4.0，最快至0.25秒极速解锁，更具备指纹自学习功能。更有一指支付, 让你保持从容，时刻快人一步。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1204px;background-image:url(//img12.360buyimg.com/cms/jfs/t12652/151/2167233009/276117/22ec8078/5a3a27f9N46a740c3.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 126px; text-align: right; line-height: 32px; font-size: 24px; font-family: '微软雅黑'; color: #039; height: 184px; width: 603px; top: 16909px;"> 
+  <p>支付安全中心，为你创建一个独立纯净的应用运行空间， 可隔离恶意钓鱼程序，并智能提示用户将支付应用加 入保护。除此之外，还能保护交易短信的安全 使用环境，保障支付安全*14。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1393px;background-image:url(//img14.360buyimg.com/cms/jfs/t15619/245/693275925/295016/516ab4d3/5a3a296bNa3b94725.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 126px; text-align: right; line-height: 32px; font-size: 24px; font-family: '微软雅黑'; color: #039; height: 184px; width: 603px; top: 16909px;"> 
+ </div> 
+ <div style="position: absolute; left: 99px; text-align: right; line-height: 32px; font-size: 24px; font-family: '微软雅黑'; color: #039; height: 184px; width: 603px; top: 18410px;"> 
+  <p>采用智电5.0软硬件一体化节电技术，针对重度手机用户，亦能 够轻松使用一整天*15。六大节电技术，后台高耗电应用智能 提醒，一键清理，有效管理电池电量</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1216px;background-image:url(//img30.360buyimg.com/cms/jfs/t11935/263/1068646271/278670/f195705b/5a3a7c07N0982ca1c.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 82px; text-align: center; line-height: 32px; font-size: 24px; font-family: '微软雅黑'; color: #EEE; height: 184px; width: 603px; top: 18938px;"> 
+  <p>护眼模式可有效降低蓝光辐射、调节色温及亮度，模拟人眼的亮度适应模式；更有4096级亮度调节技术，亮度变化更加丝质顺滑。支持夜光屏，最低亮度低至3nit, 让你享受睡前的舒适阅读时光。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1341px;background-image:url(//img14.360buyimg.com/cms/jfs/t14062/96/2348991788/262542/fd83490/5a3a7d2dN6a4aa004.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 60px; text-align: left; line-height: 40px; font-size: 24px; font-family: '微软雅黑'; color: #039; height: 184px; width: 414px; top: 20097px;"> 
+  <p>内置麒麟i5协处理器，实现低功耗计步功能，熄屏情况下也能随时计步， 计步数据可自动同步至微信运动。</p> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:1332px;background-image:url(//img30.360buyimg.com/cms/jfs/t14890/247/840572326/273446/eae2696b/5a3a7e0cNfe7bc4a3.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 76px; text-align: center; line-height: 40px; font-size: 24px; font-family: '微软雅黑'; color: #EEE; height: 218px; width: 596px; top: 22183px;"> 
+  <p>购买荣耀9青春版，你将随手机获赠官方专属手机壳，其采用优质环保PC材料精工制作而成，强度更高， 更柔韧，拥有耐磨、耐寒、不易氧化等特性， 有效呵护你的爱机。</p> 
+ </div> 
+ <div style="width:750px;margin:0 auto; position:relative"> 
+  <img src="//img20.360buyimg.com/cms/jfs/t15196/354/811459944/272547/e7f1b1f6/5a3a7f11N0393ae31.jpg" /> 
+  <img src="//img30.360buyimg.com/cms/jfs/t12553/338/2320665713/200251/95b16059/5a3a801dN7d5804b9.jpg" /> 
+ </div> 
+ <div style="width:750px; position:relative; margin:0 auto;height:777px;background-image:url(//img14.360buyimg.com/cms/jfs/t15685/252/704303799/12040/45995bbf/5a3a8116Nf8ca3cc7.jpg)"> 
+ </div> 
+ <div style="position: absolute; left: 13px; text-align: left; line-height: 22px; font-size: 18px; font-family: '微软雅黑'; color: #000; height: 218px; width: 741px; top: 24889px;"> 
+  <p>*1:四摄指的是正反面均为双摄像头，1300万指是两组镜头拍摄照片所能达到的 最大像素值，正反均为1300万+200万像素的双摄像头组合。</p> 
+  <p>*2:全面屏手机是目前业界通用的概念，通常认为是指窄边框和高屏占比的手机。</p> 
+  <p>*3:4GB内存指4GB运行内存，仅限荣耀9青春版全网通高配版和全网通 尊享版配备，另有3GB版本可供选择。</p> 
+  <p> *4:1300万前置双摄，指双摄像头拍摄照片所能达到的最大像素值，两颗摄像头 分别为1300万和200万像素。</p> 
+  <p> *5:1300万后置双摄，指双摄像头拍摄照片所能达到的最大像素值，两颗摄像头 分别为1300万和200万像素。</p> 
+  <p> *6:男女面部识别能力仅限前置摄像头。</p> 
+  <p> *7:镜面效果仅限魅海蓝与海鸥灰版本。</p> 
+  <p> *8:光学膜仅限魅海蓝与海鸥灰版本。</p> 
+  <p> *9: 4GB+64GB仅限尊享版，另有3GB+32GB标配版 与4GB+32GB高配版可选。</p> 
+  <p> *10:仅限全网通版本。</p> 
+  <p> *11:VoLTE高清语音需到营业厅开通。</p> 
+  <p> *12: 依据荣耀测试标准，在信号覆盖区域内的测试结果。</p> 
+  <p>*13: 依据荣耀实验室测试数据，解锁响应最快可达0.25秒。 </p> 
+  <p>*14:荣耀从手机运行环境层面提供安全相关服务，用户依然需关注非运行环境层面 支付风险。</p> 
+  <p> *15:依据荣耀实验室功耗测试模型。</p> 
+  <p></p> 
+ </div> 
+ <img src="//img10.360buyimg.com/cms/jfs/t16489/274/709649365/116247/33b2a8ed/5a3a834eN0d520c7c.jpg" /> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:237px; background-image:url(//img12.360buyimg.com/cms/jfs/t3079/49/3883835285/37403/9b4539cc/57fb1a54N5c1ebfbb.jpg);"> 
+ <div style="position: absolute; left: 58px; text-align: left; line-height: 16px; font-size: 10px; font-family: '方正兰亭中黑_GBK'; color: #555; height: 50px; width: 650px; top: 150px;"> 
+  <ul style="list-style-type:disc; list-style-position : outside;margin:0; padding:0;"> 
+   <li style="margin:3px 0; list-style:none;">为尽可能保障普通客户的购买需求，避免“黄牛“囤积货物，抬价转售，损害普通客户利益。特此约定，同一客户，仅限 购买1台。执行方式，若遇同一ID购买多台，最多发1台；若遇不同ID但具备下列现象之一：批量相同（包括雷同、临近、 虚构）的收购地址、联系号码、收件人（巧合同名除外）、均视为同一客户、最多发1台 </li> 
+  </ul> 
+ </div> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:173px; background-image:url(//img14.360buyimg.com/cms/jfs/t3664/195/80848320/46162/a4fae638/57fe07b4N2d47821c.jpg
+); margin-bottom:10px;"> 
+ <div style="position: absolute; left: 83px; text-align: left; line-height: 16px; font-size: 10px; font-family: '方正兰亭中黑_GBK'; color: #555; height: 40px; width: 641px; top: 122px;"> 
+  <ul style="list-style-type:disc; list-style-position : outside;margin:0; padding:0;"> 
+   <li style="margin:3px 0; list-style:none;">如因质量问题或故障，请您<span style="color:#c30d23;">携带好购机发票</span>前往华为售后网点检测，凭华为售后网点的检测单，享受7日内退货，15日内换货，15日以上在质保期内如检测符合保修享受免费保修等三包服务；或拨打华为终端客服热线4008308300申请寄修服务、联系京东在线客服申请售后； </li> 
+  </ul> 
+ </div> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:29px; "> 
+ <div style="position: absolute; height: 29px; width: 750px;"> 
+  <map name="Map" id="Map"> <area shape="rect" coords="293,0,456,26" href="https://help.jd.com/user/custom.html" target="_blank"></area> </map> 
+ </div> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:154px; background-image:url(//img11.360buyimg.com/cms/jfs/t3238/247/3897876947/8810/8d1a7b5a/57fb171eN0eb5568c.jpg
+);"> 
+ <div style="position: absolute; left: 73px;  line-height: 18px; font-size: 12px; font-family: '方正兰亭中黑_GBK'; color: #555; height: 130px; width: 600px; top: 30px;"> 
+  <ul style="list-style-type:disc; list-style-position : outside;margin:0; padding:0;"> 
+   <li style="margin:3px 0; list-style:none;">京东网站<span style="color:#c30d23;">所售商品都是正品行货</span>，均开具正规发票（图书商品用户自由选择是否开发票），发票金额含配送费金额，另有说明的除外。<br /> 1.?如何获得普通纸质发票：下单时选择“普通发票（纸质）”自助开取，此发票可用作单位报销凭证，一个订单对应一张或多张发票，不同的物流中心发出的包裹开具不同的发票，发票会随每次包裹一同发出。<br /> 2.?如何获得普通电子发票：下单时选择“普通发票（电子）”自助开取，订单完成后，系统会自动开具，用户可登陆京东个人账户，在订单详情页-付款信息页面下载。电子发票是税务局认可的有效收付款凭证，具有售后维权的法律效力，可用于单位报销使用。个人用户选择开具电子发票后无法换取个人抬头的普通纸质发票。<br /> <span style="color:#c30d23;">注：下单系统默认为电子发票，若需要纸质发票时，请自行选择，如下图所示:</span> </li> 
+  </ul> 
+ </div> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:411px; background-image:url(//img11.360buyimg.com/cms/jfs/t3292/216/3770021737/93841/c373eb30/57fb2029N6c007004.jpg
+); margin-top:70px;"> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:305px; background-image:url(//img13.360buyimg.com/cms/jfs/t3046/294/3885099478/50059/d4a134de/57fb171eN2b55fae4.jpg
+);"> 
+ <div style="position: absolute; left: 65px; text-align: left; line-height: 17px; font-size: 12px; font-family: '方正兰亭中黑_GBK'; color: #555; height: 208px; width: 610px; top: 30px;"> 
+  <ul style="list-style-type:disc; list-style-position : outside;margin:0; padding:0;"> 
+   <li style="margin:3px 0; list-style:none;">由京东快递发货的自营（非自提）订单，在订单打印之前可以修改，打开“订单详情”页面，点击右上角的“修改订单”即可，<span style="color:#c30d23;">若没有修改订单按钮，则表示订单无法修改。</span><br /> 1、修改订单可能影响送货时间。<br /> 2、修改时将以当前商品信息为准，修改时需要注意查看活动信息。<br /> 3、由于订单生产速度快，可能出现修改不成功的情况。 </li> 
+  </ul> 
+ </div> 
+ <div style="position: absolute; left: 65px; text-align: left; line-height: 17px; font-size: 12px; font-family: '方正兰亭中黑_GBK'; color: #555; height: 158px; width: 610px; top: 156px;"> 
+  <ul style="list-style-type:disc; list-style-position : outside;margin:0; padding:0;"> 
+   <li style="margin:3px 0; list-style:none;">若商品页面中，显示“无货”时：<span style="color:#c30d23;">商品具体的到货时间是无法确定的</span>，您可以通过商品页面的“到货通知”功能获得商品到货提醒。（如下图）</li> 
+  </ul> 
+ </div> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:526px; "> 
+ <div style="position: absolute; height: 526px; width: 750px;"> 
+  <img src="//img11.360buyimg.com/cms/jfs/t3214/283/3929619386/122957/5c3e8c9f/57fb4913N0cd7d13b.jpg" usemap="#Map2" border="0" /> 
+  <map name="Map2" id="Map2"> <area shape="rect" coords="35,56,202,267" href="https://order.jd.com/center/list.action" target="_blank"></area> <area shape="rect" coords="208,58,375,264" href="https://myjd-crm.jd.com/reminder/reminderlist.action" target="_blank"></area> <area shape="rect" coords="379,52,551,264" href="https://help.jd.com/user/issue/103-983.html" target="_blank"></area> <area shape="rect" coords="555,54,726,266" href="https://help.jd.com/user/issue/321-981.html" target="_blank"></area> <area shape="rect" coords="32,271,202,479" href="https://myjd.jd.com/afs/indexNew.action " target="_blank"></area> <area shape="rect" coords="207,271,370,476" href="https://order.jd.com/center/list.action" target="_blank"></area> <area shape="rect" coords="376,271,549,481" href="https://mymoney.jd.com/finance/recently.action" target="_blank"></area> <area shape="rect" coords="553,270,727,481" href="https://safe.jd.com/user/paymentpassword/safetyCenter.action" target="_blank"></area> <area shape="rect" coords="259,490,511,522" href="https://help.jd.com/user/index.html" target="_blank"></area> </map> 
+ </div> 
+</div> 
+<div style=" position:relative; width:750px; margin:0 auto;height:288px; "> 
+ <div style="position: absolute; height: 288px; width: 750px;"> 
+  <img src="//img30.360buyimg.com/cms/jfs/t3286/269/4159670339/96338/ec947cd8/57fb171eN29428fb4.jpg" usemap="#Map3" border="0" /> 
+  <map name="Map3" id="Map3"> <area shape="rect" coords="286,217,463,288" href="#top"></area> </map> 
+ </div> 
+</div><br/></div>
+								</div>
+							</div>
+							<div id="two" class="tab-pane">
+								<div class="Ptable">
+									<div class="Ptable-item" v-for="group in specGroups" :key="group.id">
+										<h3 v-text="group.name"></h3>
+										<dl>
+            <span v-for="param in group.params" :key="param.id">
+				<dt v-text="param.name"></dt><dd v-text="param.value + (param.unit || '')"></dd>
+			</span>
+										</dl>
+									</div>
+								</div>
+								<div class="package-list">
+									<h3>包装清单</h3>
+									<p>手机x1；充电器x1；USB 线x1；快速指南x1；售后服务手册x1；取卡针x1；保护壳x1</p>
+								</div>
+
+							</div>
+							<div id="three" class="tab-pane">
+								<p>本产品全国联保，享受三包服务，质保期为：一年质保</p>
+							</div>
+							<div id="four" class="tab-pane">
+								<p>商品评价</p>
+							</div>
+							<div id="five" class="tab-pane">
+								<p>手机社区</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--like-->
+			<div class="clearfix"></div>
+			<div class="like">
+				<h4 class="kt">猜你喜欢</h4>
+				<div class="like-list">
+					<ul class="yui3-g">
+						<li class="yui3-u-1-6">
+							<div class="list-wrap">
+								<div class="p-img">
+									<img src="/img/_/itemlike01.png"/>
+								</div>
+								<div class="attr">
+									<em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+								</div>
+								<div class="price">
+									<strong>
+										<em>¥</em>
+										<i>3699.00</i>
+									</strong>
+								</div>
+								<div class="commit">
+									<i class="command">已有6人评价</i>
+								</div>
+							</div>
+						</li>
+						<li class="yui3-u-1-6">
+							<div class="list-wrap">
+								<div class="p-img">
+									<img src="/img/_/itemlike02.png"/>
+								</div>
+								<div class="attr">
+									<em>Apple苹果iPhone 6s/6s Plus 16G 64G 128G</em>
+								</div>
+								<div class="price">
+									<strong>
+										<em>¥</em>
+										<i>4388.00</i>
+									</strong>
+								</div>
+								<div class="commit">
+									<i class="command">已有700人评价</i>
+								</div>
+							</div>
+						</li>
+						<li class="yui3-u-1-6">
+							<div class="list-wrap">
+								<div class="p-img">
+									<img src="/img/_/itemlike03.png"/>
+								</div>
+								<div class="attr">
+									<em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+								</div>
+								<div class="price">
+									<strong>
+										<em>¥</em>
+										<i>4088.00</i>
+									</strong>
+								</div>
+								<div class="commit">
+									<i class="command">已有700人评价</i>
+								</div>
+							</div>
+						</li>
+						<li class="yui3-u-1-6">
+							<div class="list-wrap">
+								<div class="p-img">
+									<img src="/img/_/itemlike04.png"/>
+								</div>
+								<div class="attr">
+									<em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+								</div>
+								<div class="price">
+									<strong>
+										<em>¥</em>
+										<i>4088.00</i>
+									</strong>
+								</div>
+								<div class="commit">
+									<i class="command">已有700人评价</i>
+								</div>
+							</div>
+						</li>
+						<li class="yui3-u-1-6">
+							<div class="list-wrap">
+								<div class="p-img">
+									<img src="/img/_/itemlike05.png"/>
+								</div>
+								<div class="attr">
+									<em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+								</div>
+								<div class="price">
+									<strong>
+										<em>¥</em>
+										<i>4088.00</i>
+									</strong>
+								</div>
+								<div class="commit">
+									<i class="command">已有700人评价</i>
+								</div>
+							</div>
+						</li>
+						<li class="yui3-u-1-6">
+							<div class="list-wrap">
+								<div class="p-img">
+									<img src="/img/_/itemlike06.png"/>
+								</div>
+								<div class="attr">
+									<em>DELL戴尔Ins 15MR-7528SS 15英寸 银色 笔记本</em>
+								</div>
+								<div class="price">
+									<strong>
+										<em>¥</em>
+										<i>4088.00</i>
+									</strong>
+								</div>
+								<div class="commit">
+									<i class="command">已有700人评价</i>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<script src="/js/vue/vue.js"></script>
+<script src="/js/axios.min.js"></script>
+<script src="/js/common.js"></script>
+
+<script>
+	const specialSpec = JSON.parse("{\"4\":[\"\u9B45\u6D77\u84DD\",\"\u5E7B\u591C\u9ED1\",\"\u73E0\u5149\u767D\",\"\u6D77\u9E25\u7070\"],\"12\":[\"3GB\"],\"13\":[\"32GB\"]}");
+	const genericSpec = JSON.parse("{\"1\":\"\u534E\u4E3A\uFF08HUAWEI\uFF09\",\"2\":\"\u8363\u80009\u9752\u6625\u7248\",\"3\":2017.0,\"5\":149,\"6\":\"\u5176\u5B83\",\"7\":\"Android\",\"8\":\"\u6D77\u601D\uFF08Hisilicon\uFF09\",\"9\":\"Hisilicon Kirin 659\",\"10\":\"\u516B\u6838\",\"11\":2.36,\"14\":5.65,\"15\":\"2160*1080\",\"16\":200.0,\"17\":200.0,\"18\":3000.0}");
+	const skus = [{"id":6008133,"spuId":37,"title":"\u8363\u80009\u9752\u6625\u7248 \u5168\u7F51\u901A \u6807\u914D\u7248 3GB+32GB \u9B45\u6D77\u84DD \u79FB\u52A8\u8054\u901A\u7535\u4FE14G\u5168\u9762\u5C4F\u624B\u673A \u53CC\u5361\u53CC\u5F85","images":"http:\/\/image.leyou.com\/images\/13\/13\/1524297376255.jpg","price":109900,"ownSpec":"{\"4\":\"\u9B45\u6D77\u84DD\",\"12\":\"3GB\",\"13\":\"32GB\"}","indexes":"0_0_0","enable":true,"createTime":"2018-04-21T15:56:16.000+08:00","lastUpdateTime":"2018-04-21T15:56:16.000+08:00","stock":9999},{"id":6055046,"spuId":37,"title":"\u8363\u80009\u9752\u6625\u7248 \u5168\u7F51\u901A \u6807\u914D\u7248 3GB+32GB \u5E7B\u591C\u9ED1 \u79FB\u52A8\u8054\u901A\u7535\u4FE14G\u5168\u9762\u5C4F\u624B\u673A \u53CC\u5361\u53CC\u5F85","images":"http:\/\/image.leyou.com\/images\/9\/4\/1524297376729.jpg","price":109900,"ownSpec":"{\"4\":\"\u5E7B\u591C\u9ED1\",\"12\":\"3GB\",\"13\":\"32GB\"}","indexes":"1_0_0","enable":true,"createTime":"2018-04-21T15:56:17.000+08:00","lastUpdateTime":"2018-04-21T15:56:17.000+08:00","stock":9999},{"id":6055048,"spuId":37,"title":"\u8363\u80009\u9752\u6625\u7248 \u5168\u7F51\u901A \u6807\u914D\u7248 3GB+32GB \u73E0\u5149\u767D \u79FB\u52A8\u8054\u901A\u7535\u4FE14G\u5168\u9762\u5C4F\u624B\u673A \u53CC\u5361\u53CC\u5F85","images":"http:\/\/image.leyou.com\/images\/13\/13\/1524297377069.jpg","price":109900,"ownSpec":"{\"4\":\"\u73E0\u5149\u767D\",\"12\":\"3GB\",\"13\":\"32GB\"}","indexes":"2_0_0","enable":true,"createTime":"2018-04-21T15:56:17.000+08:00","lastUpdateTime":"2018-04-21T15:56:17.000+08:00","stock":9999},{"id":6055066,"spuId":37,"title":"\u8363\u80009\u9752\u6625\u7248 \u5168\u7F51\u901A \u6807\u914D\u7248 3GB+32GB \u6D77\u9E25\u7070 \u79FB\u52A8\u8054\u901A\u7535\u4FE14G\u5168\u9762\u5C4F\u624B\u673A \u53CC\u5361\u53CC\u5F85","images":"http:\/\/image.leyou.com\/images\/5\/4\/1524297377418.jpg","price":109900,"ownSpec":"{\"4\":\"\u6D77\u9E25\u7070\",\"12\":\"3GB\",\"13\":\"32GB\"}","indexes":"3_0_0","enable":true,"createTime":"2018-04-21T15:56:17.000+08:00","lastUpdateTime":"2018-04-21T15:56:17.000+08:00","stock":9999}];
+	const specs = [{"id":1,"cid":76,"name":"\u4E3B\u4F53","params":[{"id":1,"cid":76,"groupId":1,"name":"\u54C1\u724C","numeric":false,"unit":"","generic":true,"searching":false,"segments":""},{"id":2,"cid":76,"groupId":1,"name":"\u578B\u53F7","numeric":false,"unit":"","generic":true,"searching":false,"segments":""},{"id":3,"cid":76,"groupId":1,"name":"\u4E0A\u5E02\u5E74\u4EFD","numeric":true,"unit":"\u5E74","generic":true,"searching":false,"segments":""}]},{"id":2,"cid":76,"name":"\u57FA\u672C\u4FE1\u606F","params":[{"id":4,"cid":76,"groupId":2,"name":"\u673A\u8EAB\u989C\u8272","numeric":false,"unit":"","generic":false,"searching":false,"segments":""},{"id":5,"cid":76,"groupId":2,"name":"\u673A\u8EAB\u91CD\u91CF\uFF08g\uFF09","numeric":true,"unit":"g","generic":true,"searching":false,"segments":""},{"id":6,"cid":76,"groupId":2,"name":"\u673A\u8EAB\u6750\u8D28\u5DE5\u827A","numeric":false,"unit":"","generic":true,"searching":false,"segments":""}]},{"id":3,"cid":76,"name":"\u64CD\u4F5C\u7CFB\u7EDF","params":[{"id":7,"cid":76,"groupId":3,"name":"\u64CD\u4F5C\u7CFB\u7EDF","numeric":false,"unit":"","generic":true,"searching":true,"segments":""}]},{"id":4,"cid":76,"name":"\u4E3B\u82AF\u7247","params":[{"id":8,"cid":76,"groupId":4,"name":"CPU\u54C1\u724C","numeric":false,"unit":"","generic":true,"searching":true,"segments":""},{"id":9,"cid":76,"groupId":4,"name":"CPU\u578B\u53F7","numeric":false,"unit":"","generic":true,"searching":false,"segments":""},{"id":10,"cid":76,"groupId":4,"name":"CPU\u6838\u6570","numeric":false,"unit":"","generic":true,"searching":true,"segments":""},{"id":11,"cid":76,"groupId":4,"name":"CPU\u9891\u7387","numeric":true,"unit":"GHz","generic":true,"searching":true,"segments":"0-1.0,1.0-1.5,1.5-2.0,2.0-2.5,2.5-"}]},{"id":5,"cid":76,"name":"\u5B58\u50A8","params":[{"id":12,"cid":76,"groupId":5,"name":"\u5185\u5B58","numeric":false,"unit":"","generic":false,"searching":true,"segments":""},{"id":13,"cid":76,"groupId":5,"name":"\u673A\u8EAB\u5B58\u50A8","numeric":false,"unit":"","generic":false,"searching":true,"segments":""}]},{"id":6,"cid":76,"name":"\u6444\u50CF\u5934","params":[{"id":16,"cid":76,"groupId":6,"name":"\u524D\u7F6E\u6444\u50CF\u5934","numeric":true,"unit":"\u4E07","generic":true,"searching":true,"segments":"0-500,500-1000,1000-1500,1500-2000,2500-"},{"id":17,"cid":76,"groupId":6,"name":"\u540E\u7F6E\u6444\u50CF\u5934","numeric":true,"unit":"\u4E07","generic":true,"searching":true,"segments":"0-500,500-1000,1000-1500,1500-2000,2500-"}]},{"id":7,"cid":76,"name":"\u7535\u6C60\u4FE1\u606F","params":[{"id":18,"cid":76,"groupId":7,"name":"\u7535\u6C60\u5BB9\u91CF\uFF08mAh\uFF09","numeric":true,"unit":"mAh","generic":true,"searching":true,"segments":"0-2000,2000-3000,3000-4000,4000-"}]},{"id":11,"cid":76,"name":"\u5C4F\u5E55","params":[{"id":14,"cid":76,"groupId":11,"name":"\u4E3B\u5C4F\u5E55\u5C3A\u5BF8\uFF08\u82F1\u5BF8\uFF09","numeric":true,"unit":"\u82F1\u5BF8","generic":true,"searching":true,"segments":"0-4.0,4.0-5.0,5.0-5.5,5.5-6.0,6.0-"},{"id":15,"cid":76,"groupId":11,"name":"\u5206\u8FA8\u7387","numeric":false,"unit":"","generic":true,"searching":false,"segments":""}]}];
+	const params = {};
+	specs.forEach(group => {
+		group.params.forEach(param => {
+			params[param.id] = param.name;
+		})
+	});
+	// 初始化特有规格参数默认选中一个
+	const indexes = {};
+	const initIndex = skus[0].indexes.split("_");
+	Object.keys(specialSpec).forEach((id, i) => {
+		indexes[id] = parseInt(initIndex[i]);
+	})
+	const indexArr = skus.map(s => s.indexes);
+</script>
+<script>
+	var itemVm = new Vue({
+		el: "#itemApp",
+		data: {
+			ly,
+			specialSpec,// 特有规格参数模板
+			params,// 参数对象数组
+			indexes,// 初始化被选中的参数
+			num: 1,
+		},
+		methods: {
+			decrement() {
+				if (this.num > 1) {
+					this.num--;
+				}
+			},
+			increment() {
+				this.num++;
+			},
+			addCart() {
+				// 判断是否登录
+				ly.http.get("/auth/verify").then(() => {
+					// 已登录
+					ly.http.post("/cart", {
+						skuId: this.sku.id,
+						title: this.sku.title,
+						image: this.images[0],
+						price: this.sku.price,
+						num: this.num,
+						ownSpec: JSON.stringify(this.ownSpec)
+					}).then(() => {
+						// 跳转到购物车列表页
+						window.location.href = "http://www.leyou.com/cart.html";
+					}).catch(() => {
+						alert("添加购物车失败，请重试！");
+					})
+				}).catch(() => {
+					// 获取以前的购物车
+					const carts = ly.store.get("carts") || [];
+					// 获取与当前商品id一致的购物车数据
+					const cart = carts.find(c => c.skuId === this.sku.id);
+					if (cart) {
+						// 存在，修改数量
+						cart.num += this.num;
+					} else {
+						// 不存在，新增
+						carts.push({
+							skuId: this.sku.id,
+							title: this.sku.title,
+							image: this.images[0],
+							price: this.sku.price,
+							num: this.num,
+							ownSpec: JSON.stringify(this.ownSpec)
+						})
+					}
+					// 未登录
+					ly.store.set("carts", carts);
+					// 跳转到购物车列表页
+					window.location.href = "http://www.leyou.com/cart.html";
+				})
+			},
+			locked(id, i) {
+				// 如果只有一个可选项，永不锁定
+				if(specialSpec[id].length === 1) return false;
+				// 如果有其它项未选，不锁定
+				let boo = true;
+				Object.keys(this.indexes).forEach(key => {
+					if (key !== id && this.indexes[key] == null) {
+						boo = false;
+						return;
+					}
+				});
+				if (!boo) return false;
+				// 如果当前项的组合不存在，锁定
+				const {...o} = this.indexes;
+				o[id] = i;
+				const index = Object.values(o).join("_");
+				return !indexArr.includes(index);
+			},
+			selectSku(id, i) {
+				// 先判断当前选中的是否是锁定项
+				const isLocked = this.locked(id, i);
+				// 无论是否是锁定项，都允许修改
+				this.indexes[id] = i;
+				// 如果是锁定项，则需要调整其它项的选中状态
+				if (isLocked) {
+					Object.keys(this.indexes).forEach(key => {
+						if (key !== id) {
+							const remainSpec = specialSpec[key].filter((e, j) => !this.locked(key, j));
+							this.indexes[key] = remainSpec.length === 1 ? specialSpec[key].findIndex(e => e === remainSpec[0]) : null;
+						}
+					})
+				}
+			}
+		},
+		computed: {
+			sku() {
+				if (Object.values(this.indexes).includes(null)) {
+					return skus[0];
+				}
+				// 获取选中的规格参数的索引
+				const index = Object.values(this.indexes).join("_");
+				// 去skus集合寻找与index一致的sku
+				return skus.find(s => s.indexes === index);
+			},
+			images() {
+				return this.sku.images ? this.sku.images.split(",") : [];
+			},
+			specGroups() {
+				// 获取特有规格参数值
+				const ownSpec = JSON.parse(this.sku.ownSpec);
+				specs.forEach(group => {
+					group.params.forEach(param => {
+						if (param.generic) {
+							param.value = genericSpec[param.id];
+						} else {
+							param.value = ownSpec[param.id];
+						}
+					})
+				})
+				return specs;
+			},
+			ownSpec() {
+				const ownSpec = JSON.parse(this.sku.ownSpec);
+				const obj = {};
+				Object.keys(ownSpec).forEach(id => {
+					obj[this.params[id]] = ownSpec[id];
+				})
+				return obj;
+			}
+		},
+		components: {
+			lyTop: () => import('/js/pages/top.js')
+		}
+	});
+</script>
+
+<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		$("#service").hover(function () {
+			$(".service").show();
+		}, function () {
+			$(".service").hide();
+		});
+		$("#shopcar").hover(function () {
+			$("#shopcarlist").show();
+		}, function () {
+			$("#shopcarlist").hide();
+		});
+	})
+</script>
+<script type="text/javascript" src="/js/model/cartModel.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery.jqzoom/jquery.jqzoom.js"></script>
+<script type="text/javascript" src="/js/plugins/jquery.jqzoom/zoom.js"></script>
+<script type="text/javascript" src="index/index.js"></script>
+</body>
+
+</html>

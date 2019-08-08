@@ -109,10 +109,10 @@
         },
         methods:{
             login(){
-                leyou.http.post("/user/login",leyou.stringify(this.form))
+                ly.http.post("/auth/accredit",ly.stringify(this.form))
                     .then(resp => {
                         if(resp.status === 200){
-                            const url = leyou.getUrlParam("returnUrl");
+                            const url = ly.getUrlParam("returnUrl");
                             window.location = url || 'http://www.leyou.com';
                         }
                     })

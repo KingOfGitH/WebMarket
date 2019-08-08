@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="leyou-order:Web exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/leyou_order_Web_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="leyou-order/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="leyou-order" />
+        </element>
+      </element>
+      <element id="module-output" name="leyou-order" />
+    </root>
+  </artifact>
+</component>

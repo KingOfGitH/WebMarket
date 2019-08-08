@@ -1,9 +1,30 @@
 package com.leyou.search.pojo;
 
+import java.util.Map;
+
 public class SearchRequest {
+    @Override
+    public String toString() {
+        return "SearchRequest{" +
+                "key='" + key + '\'' +
+                ", page=" + page +
+                ", filter=" + filter +
+                '}';
+    }
+
     private String key;
 
     private Integer page;
+
+    private Map<String ,String > filter;
+
+    public Map<String, String> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Map<String, String> filter) {
+        this.filter = filter;
+    }
 
     private static final Integer DEFAULT_SIZE=20;
     private static final Integer DEFAULT_PAGE=1;

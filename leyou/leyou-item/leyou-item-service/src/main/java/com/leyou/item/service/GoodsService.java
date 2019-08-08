@@ -2,6 +2,7 @@ package com.leyou.item.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.leyou.common.dto.CartDto;
 import com.leyou.common.enums.ExceptionEnum;
 import com.leyou.common.exception.LeyouException;
 import com.leyou.common.vo.PageResult;
@@ -156,6 +157,12 @@ public class GoodsService {
             throw new LeyouException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
         }
 
+        selectStockBySkuList(skus);
+
+        return skus;
+    }
+
+    public void selectStockBySkuList(List<Sku> skus) {
         skus.forEach(s -> {
             Stock stock = stockMapper.selectByPrimaryKey(s.getId());
             if (stock==null){
@@ -163,10 +170,7 @@ public class GoodsService {
             }
             s.setStock(stock.getStock());
         });
-
-        return skus;
     }
-
 
     public void updateGoods(Spu spu) {
         if (spu.getId()==null){
@@ -226,6 +230,28 @@ public class GoodsService {
             this.amqpTemplate.convertAndSend("item." + type, id);
         } catch (Exception e) {
             log.error("{}商品消息发送异常，商品id：{}", type, id, e);
+        }
+    }
+
+    public Sku querySkuById(Long id) {
+        return this.skuMapper.selectByPrimaryKey(id);
+    }
+
+    public List<Sku> querySkusByIds(List<Long> ids) {
+        List<Sku> skus = this.skuMapper.selectByIdList(ids);
+        if (CollectionUtils.isEmpty(skus)){
+            throw new LeyouException(ExceptionEnum.GOODS_SKU_NOT_FOUND);
+        }
+        selectStockBySkuList(skus);
+        return skus;
+    }
+
+    public void decreaseStock(List<CartDto> cartDTOList) {
+        for (CartDto cartDTO : cartDTOList) {
+            int i = stockMapper.deceraseStock(cartDTO.getSkuId(), cartDTO.getNum());
+            if (i!=1){
+                throw new LeyouException(ExceptionEnum.STOCK_NOT_ENOUGH);
+            }
         }
     }
 }

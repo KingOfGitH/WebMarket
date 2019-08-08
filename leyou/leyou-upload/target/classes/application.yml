@@ -23,7 +23,7 @@ fdfs:
     height: 60
   tracker-list:
     - 192.168.249.129:22122
-ly:
+leyou:
   upload:
     baseUrl: http://image.leyou.com/
     allowTypes:

@@ -11,9 +11,9 @@ spring:
     default-property-inclusion: non_null # 配置json处理时忽略空值
   rabbitmq:
     host: 192.168.249.129
+    virtual-host: /leyou
     username: leyou
     password: leyou
-    virtual-host: /leyou
 eureka:
   client:
     service-url:

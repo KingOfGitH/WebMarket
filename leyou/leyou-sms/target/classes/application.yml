@@ -1,0 +1,25 @@
+server:
+  port: 8086
+spring:
+  application:
+    name: leyou-sms
+  rabbitmq:
+    host: 192.168.249.129
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+  redis:
+    host: 192.168.249.129
+leyou:
+  sms:
+    accessKeyId: 1400186372 # 你自己的accessKeyId
+    accessKeySecret: f3a4003181136e6e11d1d64e337bb57b # 你自己的AccessKeySecret
+    signName: 张远航个人开发使用 # 签名名称
+    verifyCodeTemplate: 282512 # 模板名称
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true

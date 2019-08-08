@@ -17,6 +17,7 @@ import com.leyou.search.repository.GoodsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -157,13 +158,18 @@ public class SearchService {
     }
 
     public PageResult<Goods> search(SearchRequest request) {
+        String key = request.getKey();
+        if (StringUtils.isBlank(key)) {
+            return null;
+        }
         int page = request.getPage()-1;
         Integer size = request.getSize();
 
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
         nativeSearchQueryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id", "subTitle", "skus"}, null));
         nativeSearchQueryBuilder.withPageable(PageRequest.of(page,size));
-        QueryBuilder all = QueryBuilders.matchQuery("all", request.getKey());
+//        QueryBuilder all=QueryBuilders.matchQuery("all",key);
+        QueryBuilder all = buildBasicQuery(request);
         nativeSearchQueryBuilder.withQuery(all);
 
         //聚合
@@ -188,6 +194,21 @@ public class SearchService {
             specs=buildSpecificationAgg(categories.get(0).getId(),all);
         }
         return new SearchResult(totalElements,totalPages,goodsList,categories,brands,specs);
+    }
+
+    private QueryBuilder buildBasicQuery(SearchRequest request) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        boolQueryBuilder.must(QueryBuilders.matchQuery("all",request.getKey()));
+        Map<String, String> filter = request.getFilter();
+        System.out.println(filter.toString());
+        for (Map.Entry<String, String> entry : filter.entrySet()) {
+            String key = entry.getKey();
+            if (!"cid3".equals(key)&&!"brandId".equals(key)){
+                key="specs."+key+".keyword";
+            }
+            boolQueryBuilder.filter(QueryBuilders.termQuery(key,entry.getValue()));
+        }
+        return boolQueryBuilder;
     }
 
     private List<Map<String, Object>> buildSpecificationAgg(Long id, QueryBuilder all) {

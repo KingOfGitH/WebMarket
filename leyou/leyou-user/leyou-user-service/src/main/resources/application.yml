@@ -1,0 +1,32 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: leyou-user-service
+  datasource:
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.249.129:3306/leyou
+    hikari:
+      max-lifetime: 2883000
+      maximum-pool-size: 9
+  redis:
+    host: 192.168.249.129
+  rabbitmq:
+    username: leyou
+    virtual-host: /leyou
+    password: leyou
+    host: 192.168.249.129
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+mybatis:
+  type-aliases-package: com.leyou.user.pojo
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

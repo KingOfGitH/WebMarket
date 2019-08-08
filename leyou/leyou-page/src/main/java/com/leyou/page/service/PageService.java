@@ -116,7 +116,7 @@ public class PageService {
         Context context = new Context();
         context.setVariables(loadModel(spuId));
 
-        File dest=new File("",spuId+".html");
+        File dest=new File("D:\\app\\GitHub\\WebMarket\\leyou\\leyou-page\\src\\main\\resources\\static\\",spuId+".html");
 
         if (dest.exists()){
             dest.delete();
@@ -129,7 +129,7 @@ public class PageService {
     }
 
     public void deleteHtml(Long spuId) {
-        File dest=new File("",spuId+".html");
+        File dest=new File("D:\\app\\GitHub\\WebMarket\\leyou\\leyou-page\\src\\main\\resources\\static\\",spuId+".html");
         if (dest.exists()){
             dest.delete();
         }
